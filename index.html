@@ -1,0 +1,527 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>لوحة تحكم قالب بلوجر</title>
+    <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@300;400;500;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary: #4361ee;
+            --secondary: #3f37c9;
+            --success: #4cc9f0;
+            --dark: #2b2d42;
+            --light: #f8f9fa;
+            --danger: #e63946;
+        }
+        
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: 'Tajawal', sans-serif;
+        }
+        
+        body {
+            background-color: #f5f7fb;
+            color: #333;
+            line-height: 1.6;
+        }
+        
+        .container {
+            display: flex;
+            min-height: 100vh;
+        }
+        
+        /* الشريط الجانبي */
+        .sidebar {
+            width: 250px;
+            background: linear-gradient(180deg, var(--primary), var(--secondary));
+            color: white;
+            padding: 20px 0;
+            box-shadow: 0 0 15px rgba(0,0,0,0.1);
+        }
+        
+        .logo {
+            text-align: center;
+            padding: 20px;
+            border-bottom: 1px solid rgba(255,255,255,0.1);
+            margin-bottom: 30px;
+        }
+        
+        .logo h2 {
+            font-weight: 700;
+        }
+        
+        .nav-links {
+            list-style: none;
+            padding: 0 15px;
+        }
+        
+        .nav-links li a {
+            display: flex;
+            align-items: center;
+            padding: 12px 15px;
+            margin-bottom: 5px;
+            color: rgba(255,255,255,0.8);
+            text-decoration: none;
+            border-radius: 5px;
+            transition: all 0.3s;
+        }
+        
+        .nav-links li a:hover, .nav-links li a.active {
+            background: rgba(255,255,255,0.1);
+            color: white;
+        }
+        
+        .nav-links li a i {
+            margin-left: 10px;
+            font-size: 20px;
+        }
+        
+        /* المحتوى الرئيسي */
+        .main-content {
+            flex: 1;
+            padding: 20px;
+        }
+        
+        .header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 30px;
+            background: white;
+            padding: 15px 20px;
+            border-radius: 10px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+        }
+        
+        .header h1 {
+            color: var(--dark);
+            font-size: 24px;
+        }
+        
+        .user-info {
+            display: flex;
+            align-items: center;
+        }
+        
+        .user-info img {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            margin-left: 10px;
+        }
+        
+        /* البطاقات */
+        .cards {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 20px;
+            margin-bottom: 30px;
+        }
+        
+        .card {
+            background: white;
+            border-radius: 10px;
+            padding: 20px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+        }
+        
+        .card-title {
+            color: var(--dark);
+            margin-bottom: 15px;
+            font-size: 18px;
+            font-weight: 500;
+        }
+        
+        /* النماذج */
+        .form-group {
+            margin-bottom: 20px;
+        }
+        
+        .form-group label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 500;
+            color: var(--dark);
+        }
+        
+        .form-control {
+            width: 100%;
+            padding: 12px 15px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            font-size: 16px;
+            transition: border 0.3s;
+        }
+        
+        .form-control:focus {
+            border-color: var(--primary);
+            outline: none;
+        }
+        
+        .btn {
+            padding: 12px 25px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 16px;
+            font-weight: 500;
+            transition: all 0.3s;
+        }
+        
+        .btn-primary {
+            background: var(--primary);
+            color: white;
+        }
+        
+        .btn-primary:hover {
+            background: var(--secondary);
+        }
+        
+        .btn-block {
+            display: block;
+            width: 100%;
+        }
+        
+        /* الجدول */
+        .table {
+            width: 100%;
+            border-collapse: collapse;
+            background: white;
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+        }
+        
+        .table th, .table td {
+            padding: 15px;
+            text-align: right;
+        }
+        
+        .table th {
+            background: var(--primary);
+            color: white;
+            font-weight: 500;
+        }
+        
+        .table tr:nth-child(even) {
+            background: #f9fafc;
+        }
+        
+        /* الرسائل */
+        .alert {
+            padding: 15px;
+            margin-bottom: 20px;
+            border-radius: 5px;
+        }
+        
+        .alert-success {
+            background: #d4edda;
+            color: #155724;
+        }
+        
+        .alert-danger {
+            background: #f8d7da;
+            color: #721c24;
+        }
+        
+        /* الكود */
+        .code-block {
+            background: #2b2d42;
+            color: #f8f9fa;
+            padding: 15px;
+            border-radius: 5px;
+            font-family: monospace;
+            font-size: 14px;
+            overflow-x: auto;
+            margin: 20px 0;
+        }
+        
+        /* شاشة التحميل */
+        .loader {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(255, 255, 255, 0.8);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 1000;
+        }
+        
+        .spinner {
+            border: 5px solid #f3f3f3;
+            border-top: 5px solid #4361ee;
+            border-radius: 50%;
+            width: 50px;
+            height: 50px;
+            animation: spin 1s linear infinite;
+        }
+        
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+    </style>
+</head>
+<body>
+    <div class="loader" id="loader">
+        <div class="spinner"></div>
+    </div>
+    
+    <div class="container">
+        <!-- الشريط الجانبي -->
+        <div class="sidebar">
+            <div class="logo">
+                <h2>نظام التفعيل</h2>
+                <p>قالب بلوجر</p>
+            </div>
+            
+            <ul class="nav-links">
+                <li><a href="#" class="active"><i>📊</i> لوحة التحكم</a></li>
+                <li><a href="#"><i>🔑</i> تفعيل جديد</a></li>
+                <li><a href="#"><i>📝</i> التراخيص</a></li>
+                <li><a href="#"><i>👤</i> الملف الشخصي</a></li>
+                <li><a href="#"><i>⚙️</i> الإعدادات</a></li>
+                <li><a href="#" id="logoutBtn"><i>🚪</i> تسجيل الخروج</a></li>
+            </ul>
+        </div>
+        
+        <!-- المحتوى الرئيسي -->
+        <div class="main-content">
+            <div class="header">
+                <h1>مرحبًا بك في لوحة التحكم</h1>
+                <div class="user-info">
+                    <span id="username">جاري التحميل...</span>
+                    <img id="userAvatar" src="https://ui-avatars.com/api/?name=مستخدم&background=random" alt="صورة المستخدم">
+                </div>
+            </div>
+            
+            <div class="cards">
+                <div class="card">
+                    <h3 class="card-title">تفعيل جديد</h3>
+                    <div class="form-group">
+                        <label for="blogId">معرف المدونة (Blog ID)</label>
+                        <input type="text" id="blogId" class="form-control" placeholder="example.blogspot.com">
+                    </div>
+                    <div class="form-group">
+                        <label for="email">البريد الإلكتروني</label>
+                        <input type="email" id="email" class="form-control" placeholder="example@email.com" value="" readonly>
+                    </div>
+                    <button class="btn btn-primary btn-block" onclick="generateActivationCode()">إنشاء كود التفعيل</button>
+                </div>
+                
+                <div class="card">
+                    <h3 class="card-title">كود التفعيل</h3>
+                    <div id="activationResult" class="code-block" style="display:none;">
+                        <!-- سيتم عرض كود التفعيل هنا -->
+                    </div>
+                    <p id="activationMessage" style="margin-top:15px; text-align:center; color:#666;"></p>
+                </div>
+            </div>
+            
+            <div class="card">
+                <h3 class="card-title">التراخيص النشطة</h3>
+                <table class="table" id="licensesTable">
+                    <thead>
+                        <tr>
+                            <th>معرف المدونة</th>
+                            <th>كود التفعيل</th>
+                            <th>تاريخ التفعيل</th>
+                            <th>الحالة</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <!-- سيتم ملء البيانات من Firebase -->
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+
+    <!-- Firebase SDK - الإصدار المحدث -->
+    <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-auth-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore-compat.js"></script>
+    
+    <script>
+        // التهيئة الصحيحة لـ Firebase
+        const firebaseConfig = {
+            apiKey: "AIzaSyASXGPuFxvIvkC3bIrQwx2fJ4KC8vUy75Y",
+            authDomain: "web-blog-elmstr.firebaseapp.com",
+            projectId: "web-blog-elmstr",
+            storageBucket: "web-blog-elmstr.appspot.com",
+            messagingSenderId: "155655961329",
+            appId: "1:155655961329:web:9e28330b6c9763040a8750",
+            measurementId: "G-PP6TNGPVG5"
+        };
+        
+        // تهيئة Firebase
+        const app = firebase.initializeApp(firebaseConfig);
+        const auth = firebase.auth();
+        const db = firebase.firestore();
+        
+        // عناصر DOM
+        const loader = document.getElementById('loader');
+        const usernameEl = document.getElementById('username');
+        const userAvatarEl = document.getElementById('userAvatar');
+        const userEmailEl = document.getElementById('email');
+        const licensesTable = document.getElementById('licensesTable');
+        
+        // دالة للتحقق من حالة المصادقة
+        function checkAuthState() {
+            auth.onAuthStateChanged(user => {
+                if (user) {
+                    // المستخدم مسجل الدخول
+                    loader.style.display = 'none';
+                    usernameEl.textContent = user.displayName || user.email.split('@')[0];
+                    userAvatarEl.src = `https://ui-avatars.com/api/?name=${encodeURIComponent(usernameEl.textContent)}&background=random`;
+                    userEmailEl.value = user.email;
+                    
+                    // جلب التراخيص
+                    fetchLicenses(user.email);
+                } else {
+                    // المستخدم غير مسجل الدخول
+                    window.location.href = 'login.html';
+                }
+            });
+        }
+        
+        // دالة جلب التراخيص
+        function fetchLicenses(email) {
+            db.collection('activations')
+                .where('email', '==', email)
+                .get()
+                .then(querySnapshot => {
+                    const tbody = licensesTable.querySelector('tbody');
+                    tbody.innerHTML = '';
+                    
+                    if (querySnapshot.empty) {
+                        tbody.innerHTML = '<tr><td colspan="4" style="text-align:center;">لا توجد تراخيص</td></tr>';
+                        return;
+                    }
+                    
+                    querySnapshot.forEach(doc => {
+                        const data = doc.data();
+                        const tr = document.createElement('tr');
+                        
+                        tr.innerHTML = `
+                            <td>${doc.id}</td>
+                            <td>${data.code}</td>
+                            <td>${data.createdAt ? new Date(data.createdAt.seconds * 1000).toLocaleDateString('ar-EG') : 'غير معروف'}</td>
+                            <td>${data.active ? '<span style="color:green;">✅ نشط</span>' : '<span style="color:red;">❌ غير مفعل</span>'}</td>
+                        `;
+                        
+                        tbody.appendChild(tr);
+                    });
+                })
+                .catch(error => {
+                    console.error('خطأ في جلب التراخيص:', error);
+                    showAlert('حدث خطأ في جلب بيانات التراخيص', 'danger');
+                });
+        }
+        
+        // دالة إنشاء كود التفعيل
+        function generateActivationCode() {
+            const blogId = document.getElementById('blogId').value;
+            const email = document.getElementById('email').value;
+            
+            if(!blogId || !email) {
+                showAlert('الرجاء ملء جميع الحقول', 'danger');
+                return;
+            }
+            
+            // إظهار التحميل
+            loader.style.display = 'flex';
+            
+            // توليد كود عشوائي (8 أحرف)
+            const activationCode = Math.random().toString(36).substring(2, 10).toUpperCase();
+            
+            // حفظ البيانات في Firestore
+            db.collection('activations').doc(blogId).set({
+                code: activationCode,
+                email: email,
+                createdAt: firebase.firestore.FieldValue.serverTimestamp(),
+                active: false
+            })
+            .then(() => {
+                // إخفاء التحميل
+                loader.style.display = 'none';
+                
+                // عرض كود التفعيل
+                document.getElementById('activationResult').style.display = 'block';
+                document.getElementById('activationResult').innerHTML = activationCode;
+                document.getElementById('activationMessage').innerHTML = 
+                    'انسخ هذا الكود وضعه في قالب بلوجر. بعد التفعيل ستصبح الرخصة نشطة.';
+                
+                // رسالة نجاح
+                showAlert('تم إنشاء كود التفعيل بنجاح!', 'success');
+                
+                // تحديث قائمة التراخيص
+                fetchLicenses(email);
+            })
+            .catch(error => {
+                // إخفاء التحميل
+                loader.style.display = 'none';
+                
+                console.error('Firebase Error:', error);
+                showAlert('حدث خطأ: ' + error.message, 'danger');
+            });
+        }
+        
+        // دالة لعرض الرسائل
+        function showAlert(message, type) {
+            // إزالة أي رسائل سابقة
+            const existingAlert = document.querySelector('.alert');
+            if (existingAlert) existingAlert.remove();
+            
+            const alertDiv = document.createElement('div');
+            alertDiv.className = `alert alert-${type}`;
+            alertDiv.appendChild(document.createTextNode(message));
+            
+            const header = document.querySelector('.header');
+            header.parentNode.insertBefore(alertDiv, header.nextSibling);
+            
+            setTimeout(() => {
+                alertDiv.remove();
+            }, 5000);
+        }
+        
+        // تسجيل الخروج
+        document.getElementById('logoutBtn').addEventListener('click', function(e) {
+            e.preventDefault();
+            loader.style.display = 'flex';
+            auth.signOut().then(() => {
+                window.location.href = 'login.html';
+            });
+        });
+        
+        // التحقق من اتصال Firebase عند التحميل
+        function checkFirebaseConnection() {
+            try {
+                db.collection("test").doc("test").get()
+                    .then(() => {
+                        console.log("Firebase connection successful");
+                        checkAuthState();
+                    })
+                    .catch(e => {
+                        console.error("Firebase error:", e);
+                        loader.style.display = 'none';
+                        showAlert('فشل الاتصال بقاعدة البيانات. الرجاء التحقق من اتصال الإنترنت وإعدادات Firebase', 'danger');
+                    });
+            } catch (e) {
+                console.error("Firebase initialization error:", e);
+                loader.style.display = 'none';
+                showAlert('خطأ في تهيئة Firebase. الرجاء التحقق من بيانات التهيئة', 'danger');
+            }
+        }
+        
+        // بدء التطبيق عند تحميل الصفحة
+        window.addEventListener('DOMContentLoaded', checkFirebaseConnection);
+    </script>
+</body>
+</html>
